@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react'
 import LazyImage from './LazyImage';
+import { Link } from 'react-router-dom';
 
 const PokeCard = ({url, name}) => {
 
@@ -41,9 +42,9 @@ useEffect(()=>{
   return (
     <>
       {pokemon && 
-      <a 
+      <Link
         className={`box-border rounded-lg ${border} w-[8.5rem] h-[8.5rem] z-0 bg-slate-800 justify-between items-center`}
-        href={`/pokemon/${name}`}>
+        to={`/pokemon/${name}`}>
       
         <div className={`${text} h-[1.5rem] text-xs w-full pt-1 px-2 text-right rounded-t-lg`}>
           #{pokemon.id.toString().padStart(3, '00')}
@@ -58,7 +59,7 @@ useEffect(()=>{
           {pokemon.name}
         </div>
           
-      </a>}
+      </Link>}
         
     </>
    

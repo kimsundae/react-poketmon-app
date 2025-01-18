@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
-import {getAuth, signInWithPopup, GoogleAuthProvider} from 'firebase/auth'
+import {getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged} from 'firebase/auth'
 import app from '../../firebase';
 
 const NavBar = () => {
@@ -12,7 +12,20 @@ const NavBar = () => {
   const [show, setShow] = useState(false);
   
   const {pathname} = useLocation();
+  const navigate = useNavigate();
+  useEffect(()=>{
+    const unsubscribe = onAuthStateChanged(auth, (user)=>{
+      if(!user){
+        navigate("/login");
+      } else if(user && pathname === "/login"){
+        navigate("/");
+      }
+    })
 
+    return ()=>{
+      unsubscribe();
+    }
+  },[pathname])
   const handleAuth = ()=>{
     signInWithPopup(auth, provider)
     .then(result => {
@@ -48,10 +61,43 @@ const NavBar = () => {
       {pathname === '/login' ? (
         <Login onClick={handleAuth}>로그인</Login>
       ) : null}
-    </NavWrapper>
 
+      <SignOut>
+        <Dropdown>
+          asdasdasd
+        </Dropdown>
+      </SignOut>
+    </NavWrapper>
+    
   )
 }
+
+const Dropdown = styled.div`
+  position: absolute;
+  top:48px;
+  right: 0px;
+  background: rgb(19,19,19);
+  border: 1px solid rgba(151,151,151, 0.34);
+  border-radius: 4px;
+  box-shadow: rgb(0 0 0 / 50%) 0px 0px 18px 0px; 
+  padding: 10px;
+  font-size : 14px;
+  letter-spacing: 3px;
+  width: 100px;
+  opacity: 0;
+`
+const SignOut = styled.div`
+  position: relative;
+  height: 48px;
+  width: 48px;
+  display:flex;
+  cursor:pointer;
+  align-items: center;
+  justify-content: center;
+
+  &:hover{
+  }
+`
 
 const Login = styled.a`
   background-color: rgba(0,0,0,0.6);

@@ -15,7 +15,7 @@ const LoginPage = () => {
           <img
             alt="login"
             className='rounded-2xl' 
-            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png" alt="" />
+            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png" />
         </div>
       </div>
       
